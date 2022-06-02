@@ -73,7 +73,7 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ steps.meta.outputs.tags }},ghcr.io/${{ github.repository }}:latest
+          tags: ghcr.io/${{ github.repository }}:latest,${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
           cache-from: type=registry,ref=ghcr.io/${{ github.repository }}:latest
           cache-to: type=registry,ref=ghcr.io/${{ github.repository }}:latest,mode=max
@@ -86,7 +86,8 @@ jobs:
       - name: Sign the published Docker image
         if: ${{ github.event_name != 'pull_request' }}
         env:
+          TAGS: ${{ steps.meta.outputs.tags }}
           COSIGN_EXPERIMENTAL: "true"
         # This step uses the identity token to provision an ephemeral certificate
         # against the sigstore community Fulcio instance.
-        run: cosign sign ${{ steps.meta.outputs.tags }}@${{ steps.build-and-push.outputs.digest }}
+        run: cosign sign ${TAGS}
