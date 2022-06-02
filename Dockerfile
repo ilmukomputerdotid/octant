@@ -23,7 +23,7 @@ FROM gcr.io/distroless/base-debian11
 ENV OCTANT_LISTENER_ADDR=0.0.0.0:8080
 ENV OCTANT_DISABLE_OPEN_BROWSER=true
 
-COPY --from=build-bin /usr/src/app/build/octant /usr/local/bin/octant
+COPY --from=build-bin /usr/src/app/octant/build/octant /usr/local/bin/octant
 
 ENTRYPOINT ["/usr/local/bin/octant"]
 
