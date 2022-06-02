@@ -1,0 +1,4 @@
+[submodule "octant"]
+	path = octant
+	url = https://github.com/vmware-tanzu/octant.git
+	branch = v0.25.1
